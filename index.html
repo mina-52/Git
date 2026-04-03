@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Git 入門マニュアル — 新学期自己紹介サイト</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="logo-icon">🌿</span>
+      Git 入門
+    </div>
+    <ul class="nav-links">
+      <li><a href="#what-is-git">Gitとは</a></li>
+      <li><a href="#glossary">用語集</a></li>
+      <li><a href="#commands">コマンド</a></li>
+      <li><a href="#how-to-join">参加方法</a></li>
+      <li><a href="#members">みんなのページ</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-tag">山田ゼミ新学期スタート！</p>
+  <h1>Gitで一緒に<br>サイトを作ろう！</h1>
+  <p>このサイトはみんなで創る自己紹介ページです。<br>Gitを使って自分のページを追加してみましょう。</p>
+  <div class="hero-btns">
+    <a href="#how-to-join" class="btn btn-primary">参加する →</a>
+    <a href="#what-is-git" class="btn btn-outline">Gitを学ぶ</a>
+  </div>
+</section>
+
+<!-- ①  Gitとは？ -->
+<section class="section" id="what-is-git">
+  <div class="container">
+    <p class="section-label">Section 01</p>
+    <h2 class="section-title">Gitとは？</h2>
+    <p class="section-desc">Gitは「ファイルの変更履歴を管理するツール」です。チームで同じファイルを編集しても、変更をきれいにまとめることができます。</p>
+
+    <div class="concept-grid">
+      <div class="concept-card">
+        <div class="concept-icon">📸</div>
+        <h3>スナップショット管理</h3>
+        <p>ファイルの状態を「セーブ」するように記録できます。過去の状態にいつでも戻れます。</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🌿</div>
+        <h3>ブランチ機能</h3>
+        <p>「枝分かれ」を作って、元のファイルを壊さずに作業できます。</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🤝</div>
+        <h3>チーム開発</h3>
+        <p>複数人が同時に異なる部分を編集し、後でひとつにまとめることができます。</p>
+      </div>
+      <div class="concept-card">
+        <div class="concept-icon">🔐</div>
+        <h3>履歴が残る</h3>
+        <p>誰が・いつ・何を変えたかがすべて記録されます。ミスしても怖くありません。</p>
+      </div>
+    </div>
+
+    <div class="analogy-box">
+      <div class="analogy-icon">💡</div>
+      <div>
+        <p>
+          <strong>わかりやすいたとえ：</strong><br>
+          Gitは「Google ドキュメントの変更履歴」の超強化版です。変更のたびに「誰が・何のために変えたか」をメモ（コミットメッセージ）と一緒に保存できます。チームで使うときは GitHub というサービスを使ってクラウドで共有します。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ②  用語集 -->
+<section class="section section-alt" id="glossary">
+  <div class="container">
+    <p class="section-label">Section 02</p>
+    <h2 class="section-title">よく使う用語</h2>
+    <p class="section-desc">最初は覚えるだけで大丈夫。使っていくうちに自然に身につきます。</p>
+
+    <div class="glossary-grid">
+      <div class="glossary-card">
+        <div class="glossary-badge">repository</div>
+        <div>
+          <h3>リポジトリ</h3>
+          <p>プロジェクトのファイルと変更履歴をまるごと保存する「箱」。略して「リポ」とも呼ばれます。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">commit</div>
+        <div>
+          <h3>コミット</h3>
+          <p>変更内容を記録する操作。「セーブ」のようなイメージ。メモ（コミットメッセージ）と一緒に保存します。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">branch</div>
+        <div>
+          <h3>ブランチ</h3>
+          <p>作業を分岐させる機能。元のコードを壊さずに別の作業ができます。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">merge</div>
+        <div>
+          <h3>マージ</h3>
+          <p>別ブランチでの変更を元のブランチに取り込む操作。ブランチを「合流」させます。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">pull request</div>
+        <div>
+          <h3>プルリクエスト（PR）</h3>
+          <p>「自分の変更をマージしてください！」と提案する GitHub の機能。レビューと承認ができます。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">clone</div>
+        <div>
+          <h3>クローン</h3>
+          <p>リモート（GitHub）にあるリポジトリを自分のパソコンにコピーする操作。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">push</div>
+        <div>
+          <h3>プッシュ</h3>
+          <p>ローカルのコミットをリモート（GitHub）にアップロードする操作。</p>
+        </div>
+      </div>
+      <div class="glossary-card">
+        <div class="glossary-badge">pull</div>
+        <div>
+          <h3>プル</h3>
+          <p>リモートの最新変更を自分のパソコンに取り込む操作。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③  基本コマンド -->
+<section class="section" id="commands">
+  <div class="container">
+    <p class="section-label">Section 03</p>
+    <h2 class="section-title">基本コマンド</h2>
+    <p class="section-desc">ターミナル（コマンドプロンプト / Terminal）で入力するコマンドです。右のボタンでコピーできます。</p>
+
+    <div class="commands-list">
+
+      <!-- git init -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">リポジトリを作る</div>
+            <div class="command-desc">現在のフォルダを Git リポジトリとして初期化します</div>
+          </div>
+          <button class="copy-btn" data-target="code-init">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-init"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">init</span></code></pre>
+      </div>
+
+      <!-- git clone -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">リポジトリをコピーする</div>
+            <div class="command-desc">GitHub などにあるリポジトリを手元にダウンロードします</div>
+          </div>
+          <button class="copy-btn" data-target="code-clone">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-clone"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git</code></pre>
+      </div>
+
+      <!-- git add / commit -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">変更を記録する（add → commit）</div>
+            <div class="command-desc">ファイルを「ステージ」してからコミット（セーブ）します</div>
+          </div>
+          <button class="copy-btn" data-target="code-add-commit">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-add-commit"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> ファイル名          <span class="comment"># 特定のファイルをステージ</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> .               <span class="comment"># 変更したファイルをすべてステージ</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> -m <span class="arg">"メッセージ"</span>  <span class="comment"># コミット（何を変えたか書く）</span></code></pre>
+      </div>
+
+      <!-- git branch / checkout -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">ブランチを作って切り替える</div>
+            <div class="command-desc">新しいブランチを作り、そこに移動します</div>
+          </div>
+          <button class="copy-btn" data-target="code-branch">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-branch"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span>                  <span class="comment"># ブランチ一覧を見る</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="arg">ブランチ名</span>   <span class="comment"># 新ブランチを作って移動</span></code></pre>
+      </div>
+
+      <!-- git push / pull -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">アップロード / ダウンロード</div>
+            <div class="command-desc">ローカルとリモートの変更を同期します</div>
+          </div>
+          <button class="copy-btn" data-target="code-sync">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-sync"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span> origin <span class="arg">ブランチ名</span>   <span class="comment"># リモートにアップロード</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">pull</span>                    <span class="comment"># リモートの最新版を取得</span></code></pre>
+      </div>
+
+      <!-- git status / log -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">状態・履歴を確認する</div>
+            <div class="command-desc">今の状態や過去のコミット履歴を見られます</div>
+          </div>
+          <button class="copy-btn" data-target="code-status">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-status"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">status</span>         <span class="comment"># 変更されたファイルを確認</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> --oneline   <span class="comment"># コミット履歴をコンパクトに表示</span></code></pre>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ④  参加方法 -->
+<section class="section section-alt" id="how-to-join">
+  <div class="container">
+    <p class="section-label">Section 04</p>
+    <h2 class="section-title">このサイトに参加する</h2>
+    <p class="section-desc">自分の自己紹介ページをこのサイトに追加しましょう！5ステップで完了します。</p>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>リポジトリをクローンする</h3>
+          <p>GitHub からプロジェクトを自分のパソコンにコピーします。</p>
+          <div class="step-code">
+            <code><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git
+<span class="prompt">$ </span><span class="cmd">cd</span> リポジトリ名</code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>ブランチを作る</h3>
+          <p>自分専用のブランチを作って作業します。ブランチ名は自分の名前にしましょう。</p>
+          <div class="step-code">
+            <code><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="arg">yourname</span></code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>自己紹介ページを作る</h3>
+          <p><code>pages/template.html</code> をコピーして自分のファイルを作り、内容を書き換えましょう。ファイル名は <code>pages/yourname.html</code> にします。</p>
+          <div class="step-code">
+            <code><span class="comment"># Windows (コマンドプロンプト)</span>
+copy pages\template.html pages\yourname.html
+
+<span class="comment"># Mac / Linux</span>
+cp pages/template.html pages/yourname.html</code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>コミットしてプッシュする</h3>
+          <p>変更を保存（コミット）して GitHub にアップロードします。</p>
+          <div class="step-code">
+            <code><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> pages/yourname.html
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> -m <span class="arg">"自己紹介ページを追加"</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span> origin <span class="arg">yourname</span></code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>Pull Request を作る</h3>
+          <p>GitHub を開いて「Compare &amp; pull request」ボタンをクリック。タイトルに <strong>「〇〇の自己紹介を追加」</strong> と書いて送信しましょう。管理者がレビューしてマージします！</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ⑤  メンバー一覧 -->
+<section class="section" id="members">
+  <div class="container">
+    <p class="section-label">Section 05</p>
+    <h2 class="section-title">みんなの自己紹介</h2>
+    <p class="section-desc">ページを追加したメンバー一覧です。あなたのページも追加しましょう！</p>
+
+    <div class="members-grid">
+
+      <!-- サンプルメンバー -->
+      <a href="pages/example.html" class="member-card">
+        <div class="member-avatar">🐼</div>
+        <div class="member-name">田中 太郎</div>
+        <div class="member-meta">情報学部 1年</div>
+        <span class="member-tag">サンプル</span>
+      </a>
+
+      <!-- あなたのカードをここに追加！ -->
+      <div class="member-card member-card-add">
+        <div class="add-icon">＋</div>
+        <p>あなたのページを<br>追加しよう！</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <p>みんなで育てる Git 練習サイト 🌿<br>
+  <strong>参加方法：</strong> <a href="#how-to-join">↑ Step ガイドを見る</a> &nbsp;|&nbsp; テンプレート: <a href="pages/template.html">pages/template.html</a></p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
