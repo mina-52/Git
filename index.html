@@ -19,6 +19,7 @@
       Git 入門
     </div>
     <ul class="nav-links">
+      <li><a href="#setup">インストール</a></li>
       <li><a href="#what-is-git">Gitとは</a></li>
       <li><a href="#glossary">用語集</a></li>
       <li><a href="#commands">コマンド</a></li>
@@ -39,10 +40,152 @@
   </div>
 </section>
 
-<!-- ①  Gitとは？ -->
-<section class="section" id="what-is-git">
+<!-- ①  インストール＆初期設定 -->
+<section class="section section-alt" id="setup">
   <div class="container">
     <p class="section-label">Section 01</p>
+    <h2 class="section-title">インストール＆初期設定</h2>
+    <p class="section-desc">まずは Git をパソコンに入れて、Cursor（VS Code）で使えるようにしましょう。</p>
+
+    <div class="setup-steps">
+
+      <!-- STEP A: Git インストール -->
+      <div class="setup-block">
+        <div class="setup-block-header">
+          <span class="setup-num">A</span>
+          <div>
+            <div class="setup-block-title">Git をインストールする</div>
+            <div class="setup-block-desc">公式サイトからインストーラーをダウンロードします</div>
+          </div>
+        </div>
+        <div class="setup-body">
+          <ol class="setup-list">
+            <li>
+              <a href="https://git-scm.com/downloads" target="_blank" rel="noopener">git-scm.com/downloads</a>
+              を開き、お使いの OS（Windows / Mac）用のインストーラーをダウンロードする
+            </li>
+            <li>インストーラーを起動し、<strong>すべてデフォルト（Next を押し続ける）</strong>でインストール完了</li>
+            <li>インストール後、ターミナルで以下を実行してバージョンが表示されれば成功</li>
+          </ol>
+          <div class="step-code" style="margin-top:12px">
+            <code><span class="prompt">$ </span><span class="cmd">git</span> --version
+<span class="comment">git version 2.xx.x  ← こんな表示が出れば OK</span></code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP B: 初期設定 -->
+      <div class="setup-block">
+        <div class="setup-block-header">
+          <span class="setup-num">B</span>
+          <div>
+            <div class="setup-block-title">名前とメールアドレスを登録する</div>
+            <div class="setup-block-desc">コミットに「誰が変更したか」を記録するために必要です</div>
+          </div>
+        </div>
+        <div class="setup-body">
+          <p class="setup-note">ターミナルで以下を <strong>1行ずつ</strong> 実行してください。<br>名前とメールは GitHub のアカウントと合わせるのがおすすめです。</p>
+          <div class="step-code">
+            <code><span class="prompt">$ </span><span class="cmd">git</span> config --global user.name <span class="arg">"山田 太郎"</span>
+<span class="prompt">$ </span><span class="cmd">git</span> config --global user.email <span class="arg">"taro@example.com"</span></code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+          <div class="step-code" style="margin-top:10px">
+            <code><span class="comment"># 設定を確認するには：</span>
+<span class="prompt">$ </span><span class="cmd">git</span> config --global --list</code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP C: Cursor / VS Code の設定 -->
+      <div class="setup-block">
+        <div class="setup-block-header">
+          <span class="setup-num">C</span>
+          <div>
+            <div class="setup-block-title">Cursor（VS Code）で Git を使えるようにする</div>
+            <div class="setup-block-desc">エディタから直接 Git 操作ができるようになります</div>
+          </div>
+        </div>
+        <div class="setup-body">
+          <ol class="setup-list">
+            <li>
+              Cursor（または VS Code）を開き、左サイドバーの
+              <strong>ソース管理アイコン（枝のマーク）</strong> をクリック
+            </li>
+            <li>
+              フォルダを開いた状態で「<strong>リポジトリを初期化する</strong>」か、
+              クローンしたフォルダを開くと自動で Git が認識されます
+            </li>
+            <li>
+              変更したファイルが左サイドバーに表示される —
+              <span style="color:var(--color-primary);font-weight:700">M</span>（Modified）や
+              <span style="color:#40C057;font-weight:700">U</span>（Untracked）のラベルで確認できます
+            </li>
+            <li>
+              ファイル横の <strong>＋ボタン</strong> で <code>git add</code>、
+              メッセージ入力→<strong>コミットボタン</strong> で <code>git commit</code> が完了します
+            </li>
+          </ol>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>
+              <strong>便利な拡張機能（任意）</strong><br>
+              拡張機能（Extensions）パネルで <strong>「GitLens」</strong> を検索してインストールすると、
+              各行に「誰がいつ変更したか」がエディタ上に表示されてとても便利です。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP D: GitHub アカウント連携 -->
+      <div class="setup-block">
+        <div class="setup-block-header">
+          <span class="setup-num">D</span>
+          <div>
+            <div class="setup-block-title">GitHub アカウントを Cursor / VS Code に連携する</div>
+            <div class="setup-block-desc">プッシュ・プルを GUI で行えるようになります</div>
+          </div>
+        </div>
+        <div class="setup-body">
+          <ol class="setup-list">
+            <li>
+              <a href="https://github.com" target="_blank" rel="noopener">github.com</a>
+              でアカウントを作成（まだの人）
+            </li>
+            <li>
+              Cursor のソース管理パネル下部にある
+              <strong>「GitHub にサインイン」</strong> をクリック
+              （または左下のアカウントアイコンから）
+            </li>
+            <li>ブラウザが開くので GitHub アカウントでログイン → 認証完了</li>
+            <li>
+              これで <code>git push</code> / <code>git pull</code> を GUI ボタンや
+              コマンドパレット（<kbd>Ctrl+Shift+P</kbd>）から実行できます
+            </li>
+          </ol>
+          <div class="tip-box">
+            <div class="tip-icon">⌨️</div>
+            <div>
+              <strong>コマンドパレットからの操作</strong><br>
+              <kbd>Ctrl+Shift+P</kbd>（Mac: <kbd>⌘+Shift+P</kbd>）を押して
+              <code>Git: Clone</code> や <code>Git: Push</code> と入力すると、
+              コマンドを探さなくてもすばやく操作できます。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /setup-steps -->
+  </div>
+</section>
+
+<!-- ②  Gitとは？ -->
+<section class="section" id="what-is-git">
+  <div class="container">
+    <p class="section-label">Section 02</p>
     <h2 class="section-title">Gitとは？</h2>
     <p class="section-desc">Gitは「ファイルの変更履歴を管理するツール」です。チームで同じファイルを編集しても、変更をきれいにまとめることができます。</p>
 
@@ -84,7 +227,7 @@
 <!-- ②  用語集 -->
 <section class="section section-alt" id="glossary">
   <div class="container">
-    <p class="section-label">Section 02</p>
+    <p class="section-label">Section 03</p>
     <h2 class="section-title">よく使う用語</h2>
     <p class="section-desc">最初は覚えるだけで大丈夫。使っていくうちに自然に身につきます。</p>
 
@@ -152,7 +295,7 @@
 <!-- ③  基本コマンド -->
 <section class="section" id="commands">
   <div class="container">
-    <p class="section-label">Section 03</p>
+    <p class="section-label">Section 04</p>
     <h2 class="section-title">基本コマンド</h2>
     <p class="section-desc">ターミナル（コマンドプロンプト / Terminal）で入力するコマンドです。右のボタンでコピーできます。</p>
 
@@ -254,7 +397,7 @@
 <!-- ④  参加方法 -->
 <section class="section section-alt" id="how-to-join">
   <div class="container">
-    <p class="section-label">Section 04</p>
+    <p class="section-label">Section 05</p>
     <h2 class="section-title">このサイトに参加する</h2>
     <p class="section-desc">自分の自己紹介ページをこのサイトに追加しましょう！5ステップで完了します。</p>
 
@@ -330,7 +473,7 @@ cp pages/template.html pages/yourname.html</code>
 <!-- ⑤  メンバー一覧 -->
 <section class="section" id="members">
   <div class="container">
-    <p class="section-label">Section 05</p>
+    <p class="section-label">Section 06</p>
     <h2 class="section-title">みんなの自己紹介</h2>
     <p class="section-desc">ページを追加したメンバー一覧です。あなたのページも追加しましょう！</p>
 
