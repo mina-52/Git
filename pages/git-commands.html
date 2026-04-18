@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gitコマンド集 — Git 入門</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    /* ========================================
+       コマンド集ページ固有スタイル
+       ======================================== */
+
+    /* ページヒーロー */
+    .cmd-hero {
+      background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 60%, #52B788 100%);
+      color: white;
+      padding: 64px 24px 56px;
+      text-align: center;
+    }
+    .cmd-hero-tag {
+      display: inline-block;
+      background: rgba(255,255,255,0.18);
+      border-radius: 20px;
+      padding: 4px 18px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      margin-bottom: 18px;
+    }
+    .cmd-hero h1 {
+      font-size: clamp(1.6rem, 4vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .cmd-hero p {
+      font-size: 1rem;
+      opacity: 0.88;
+      max-width: 520px;
+      margin: 0 auto 28px;
+    }
+
+    /* 目次 */
+    .toc-bar {
+      background: #fff;
+      border-bottom: 1px solid var(--color-border);
+      padding: 0 24px;
+      overflow-x: auto;
+      white-space: nowrap;
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+    }
+    .toc-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 4px;
+      padding: 10px 0;
+    }
+    .toc-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      transition: background 0.15s, color 0.15s;
+      flex-shrink: 0;
+    }
+    .toc-item:hover {
+      background: var(--color-primary-pale);
+      color: var(--color-primary);
+      text-decoration: none;
+    }
+    .toc-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    /* カテゴリ見出し */
+    .cat-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+    .cat-icon-wrap {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    .cat-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 2px; }
+    .cat-subtitle { font-size: 0.88rem; color: var(--color-text-muted); }
+
+    /* シナリオバッジ */
+    .scenario-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFF3CD;
+      border: 1px solid #FFD166;
+      color: #7B5800;
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    .scenario-badge.green {
+      background: #F0FFF4;
+      border-color: var(--color-primary-pale);
+      color: var(--color-primary);
+    }
+    .scenario-badge.blue {
+      background: #EBF5FF;
+      border-color: #90CAF9;
+      color: #1565C0;
+    }
+    .scenario-badge.red {
+      background: #FFF5F5;
+      border-color: #FCA5A5;
+      color: #C0392B;
+    }
+    .scenario-badge.purple {
+      background: #F5F0FF;
+      border-color: #CE93D8;
+      color: #6A1B9A;
+    }
+
+    /* コマンドカード */
+    .cmd-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-bottom: 20px;
+      transition: box-shadow 0.2s;
+    }
+    .cmd-card:hover { box-shadow: var(--shadow); }
+    .cmd-card-header {
+      padding: 16px 20px 14px;
+      background: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .cmd-card-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
+    .cmd-card-body { padding: 20px 22px; }
+    .cmd-when {
+      font-size: 0.87rem;
+      color: var(--color-text-muted);
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+    .cmd-when strong { color: var(--color-text); }
+
+    /* コードブロック（インライン） */
+    .code-block {
+      background: var(--color-code-bg);
+      color: var(--color-code-text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.9rem;
+      border-radius: var(--radius-sm);
+      padding: 16px 18px;
+      overflow-x: auto;
+      line-height: 1.9;
+      position: relative;
+    }
+    .code-block .prompt { color: #A6E3A1; user-select: none; }
+    .code-block .cmd    { color: #89B4FA; }
+    .code-block .arg    { color: #FAB387; }
+    .code-block .flag   { color: #CBA6F7; }
+    .code-block .comment{ color: #585B70; font-style: italic; }
+    .code-block .str    { color: #A6E3A1; }
+
+    .copy-code-btn {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #CDD6F4;
+      border-radius: 6px;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .copy-code-btn:hover { background: rgba(255,255,255,0.2); }
+    .copy-code-btn.copied { background: #40C057; color: white; border-color: #40C057; }
+
+    /* 注意ボックス */
+    .warn-box {
+      display: flex;
+      gap: 12px;
+      background: #FFF5F5;
+      border: 1px solid #FECACA;
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-top: 14px;
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+    .warn-box .warn-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* ポイントボックス */
+    .point-box {
+      display: flex;
+      gap: 12px;
+      background: #F0FFF4;
+      border: 1px solid var(--color-primary-pale);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-top: 14px;
+      font-size: 0.86rem;
+      line-height: 1.65;
+    }
+    .point-box .point-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+
+    /* チートシート表 */
+    .cheat-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    .cheat-table thead th {
+      background: var(--color-primary);
+      color: white;
+      padding: 12px 16px;
+      text-align: left;
+      font-size: 0.85rem;
+    }
+    .cheat-table thead th:first-child { border-radius: 8px 0 0 0; }
+    .cheat-table thead th:last-child { border-radius: 0 8px 0 0; }
+    .cheat-table tbody tr { border-bottom: 1px solid var(--color-border); }
+    .cheat-table tbody tr:nth-child(even) { background: var(--color-bg); }
+    .cheat-table tbody tr:hover { background: #F0FFF4; }
+    .cheat-table td { padding: 12px 16px; vertical-align: top; line-height: 1.6; }
+    .cheat-table td:first-child {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: #89B4FA;
+      background: #1E1E2E;
+      white-space: nowrap;
+    }
+    .cheat-table td:nth-child(2) { color: var(--color-text-muted); font-size: 0.87rem; }
+
+    /* セパレーター */
+    .section-divider {
+      border: none;
+      border-top: 2px dashed var(--color-border);
+      margin: 60px 0 0;
+    }
+
+    /* フロー図 */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      background: var(--color-bg);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+    .flow-box {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: 8px;
+      padding: 10px 18px;
+      text-align: center;
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+    .flow-box .flow-label { font-size: 0.7rem; color: var(--color-text-muted); margin-bottom: 2px; }
+    .flow-box .flow-name { font-weight: 700; font-size: 0.92rem; }
+    .flow-arrow {
+      color: var(--color-primary);
+      font-size: 1.3rem;
+      padding: 0 10px;
+      flex-shrink: 0;
+    }
+    .flow-cmd {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--color-primary);
+      text-align: center;
+      flex-shrink: 0;
+      padding: 0 4px;
+    }
+    .flow-col { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="logo-icon">🌿</span>
+      Git 入門
+    </div>
+    <ul class="nav-links">
+      <li><a href="../index.html">← トップへ戻る</a></li>
+      <li><a href="#basics">基本操作</a></li>
+      <li><a href="#branch">ブランチ</a></li>
+      <li><a href="#remote">リモート</a></li>
+      <li><a href="#undo">元に戻す</a></li>
+      <li><a href="#cheatsheet">チートシート</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ヒーロー -->
+<div class="cmd-hero">
+  <div class="cmd-hero-tag">📖 コマンドリファレンス</div>
+  <h1>Gitよく使うコマンド集</h1>
+  <p>「こんなとき何を使えばいい？」がすぐ分かる。<br>シーン別に整理されたコマンド集です。</p>
+  <a href="../index.html" class="btn btn-outline" style="font-size:0.9rem; padding: 10px 22px;">← トップに戻る</a>
+</div>
+
+<!-- 目次バー -->
+<div class="toc-bar">
+  <div class="toc-inner">
+    <a href="#flow" class="toc-item"><span class="toc-dot" style="background:#52B788"></span>全体の流れ</a>
+    <a href="#basics" class="toc-item"><span class="toc-dot" style="background:#89B4FA"></span>基本操作</a>
+    <a href="#branch" class="toc-item"><span class="toc-dot" style="background:#CBA6F7"></span>ブランチ</a>
+    <a href="#remote" class="toc-item"><span class="toc-dot" style="background:#FAB387"></span>リモート</a>
+    <a href="#check" class="toc-item"><span class="toc-dot" style="background:#A6E3A1"></span>確認・調査</a>
+    <a href="#undo" class="toc-item"><span class="toc-dot" style="background:#F38BA8"></span>元に戻す</a>
+    <a href="#cheatsheet" class="toc-item"><span class="toc-dot" style="background:#FFD166"></span>チートシート</a>
+  </div>
+</div>
+
+
+<!-- ===== 全体の流れ ===== -->
+<section class="section" id="flow">
+  <div class="container">
+    <p class="section-label">Overview</p>
+    <h2 class="section-title">Gitの基本的な流れ</h2>
+    <p class="section-desc">コマンドを覚える前に、データがどこからどこへ動くか把握しておきましょう。</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box">
+        <div class="flow-label">あなたのPC</div>
+        <div class="flow-name">作業ディレクトリ</div>
+      </div>
+      <div class="flow-col">
+        <div class="flow-cmd">git add</div>
+        <div class="flow-arrow">→</div>
+      </div>
+      <div class="flow-box">
+        <div class="flow-label">一時保管場所</div>
+        <div class="flow-name">ステージング</div>
+      </div>
+      <div class="flow-col">
+        <div class="flow-cmd">git commit</div>
+        <div class="flow-arrow">→</div>
+      </div>
+      <div class="flow-box">
+        <div class="flow-label">ローカル</div>
+        <div class="flow-name">リポジトリ</div>
+      </div>
+      <div class="flow-col">
+        <div class="flow-cmd">git push</div>
+        <div class="flow-arrow">→</div>
+      </div>
+      <div class="flow-box" style="background: linear-gradient(135deg,#1B4332,#2D6A4F); color:white; border-color:#2D6A4F">
+        <div class="flow-label" style="color:rgba(255,255,255,0.7)">クラウド</div>
+        <div class="flow-name">GitHub</div>
+      </div>
+    </div>
+
+    <div class="analogy-box" style="margin-top:0">
+      <div class="analogy-icon">💡</div>
+      <div>
+        <strong>かんたんなたとえ</strong><br>
+        「作業ディレクトリ」は<strong>机の上</strong>、「ステージング」は<strong>封筒に入れる前の書類</strong>、「コミット」は<strong>封筒に封をして棚に保管</strong>、「プッシュ」は<strong>その棚をクラウドにコピー</strong>するイメージです。
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ===== 基本操作 ===== -->
+<section class="section section-alt" id="basics">
+  <div class="container">
+    <div class="cat-header">
+      <div class="cat-icon-wrap" style="background:#EBF5FF">📝</div>
+      <div>
+        <div class="cat-title">基本操作</div>
+        <div class="cat-subtitle">毎日必ず使うコマンド群。まずここをマスターしよう。</div>
+      </div>
+    </div>
+
+    <!-- git init -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">🆕 こんなとき：新しいプロジェクトを始めるとき</div>
+          <div class="cmd-card-title">リポジトリを新規作成する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-init')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>まだ Git 管理されていないフォルダを、初めて Git リポジトリとして設定したいとき。このコマンドを実行すると <code>.git</code> フォルダが作られます。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-init"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">init</span>
+<span class="comment"># → フォルダが Git リポジトリになる（.git フォルダが作られる）</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git clone -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge blue">📥 こんなとき：GitHubのリポジトリを手元にコピーしたいとき</div>
+          <div class="cmd-card-title">リポジトリをクローンする</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-clone')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>チームのリポジトリや、他人の GitHub プロジェクトを自分のパソコンにダウンロードするとき。URL は GitHub のリポジトリページの「Code」ボタンからコピーできます。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-clone"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git
+
+<span class="comment"># フォルダ名を指定してクローンしたい場合</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git <span class="str">my-folder</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git add -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">✅ こんなとき：変更したファイルをコミット対象に入れたいとき</div>
+          <div class="cmd-card-title">ファイルをステージに追加する（add）</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-add')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>編集したファイルを「次のコミットに含める」と印を付ける操作です。複数ファイルを変更しても、<code>add</code> したものだけがコミットされます。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-add"><span class="comment"># 特定のファイルだけ追加（おすすめ）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> <span class="str">index.html</span>
+
+<span class="comment"># 変更したファイルをすべて追加</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> <span class="flag">.</span>
+
+<span class="comment"># 特定フォルダ内のファイルをすべて追加</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> <span class="str">pages/</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git commit -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">💾 こんなとき：作業の区切りで変更を記録したいとき</div>
+          <div class="cmd-card-title">変更をコミット（記録）する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-commit')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>ステージに上げたファイルを正式に記録します。メッセージには「何をしたか」を日本語でOKなので簡潔に書きましょう。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-commit"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> <span class="flag">-m</span> <span class="str">"ナビゲーションのリンクを修正"</span>
+
+<span class="comment"># add と commit を同時にやる（追跡済みファイルのみ）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> <span class="flag">-am</span> <span class="str">"スタイルを調整"</span></code>
+        </div>
+        <div class="point-box">
+          <div class="point-icon">💡</div>
+          <div>コミットメッセージのコツ：<strong>「何を」「なぜ」</strong>を書くと後から見返したときに分かりやすい。例: 「ヘッダー画像を追加」「ログインエラーを修正」</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== ブランチ ===== -->
+<section class="section" id="branch">
+  <div class="container">
+    <div class="cat-header">
+      <div class="cat-icon-wrap" style="background:#F5F0FF">🌿</div>
+      <div>
+        <div class="cat-title">ブランチ操作</div>
+        <div class="cat-subtitle">作業を分岐させてチーム開発をスムーズに。</div>
+      </div>
+    </div>
+
+    <!-- git branch -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge purple">🌿 こんなとき：今どのブランチにいるか確認したいとき</div>
+          <div class="cmd-card-title">ブランチ一覧を見る</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-branch-list')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>今いるブランチを確認したり、存在するブランチをリストアップしたいとき。<code>*</code> が付いているのが現在のブランチです。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-branch-list"><span class="comment"># ローカルのブランチ一覧</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span>
+
+<span class="comment"># リモートも含めた全ブランチ一覧</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-a</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git checkout -b -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge purple">✨ こんなとき：新しい機能や修正の作業を始めるとき</div>
+          <div class="cmd-card-title">新しいブランチを作って移動する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-branch-new')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>新機能の追加やバグ修正をするとき、<code>main</code> ブランチを直接変えないように専用のブランチを作って作業します。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-branch-new"><span class="comment"># 新しいブランチを作成して、そのブランチに移動</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="flag">-b</span> <span class="str">feature/ログイン機能</span>
+
+<span class="comment"># 最新の Git では switch コマンドが推奨</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">switch</span> <span class="flag">-c</span> <span class="str">feature/ログイン機能</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git checkout / switch -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge purple">🔀 こんなとき：別のブランチに切り替えたいとき</div>
+          <div class="cmd-card-title">既存のブランチに移動する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-checkout')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>作業中のブランチから別のブランチへ移りたいとき。移動する前にコミットかスタッシュをしておきましょう。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-checkout"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span>        <span class="comment"># main ブランチに移動</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">feature/ログイン機能</span>  <span class="comment"># 別のブランチに移動</span>
+
+<span class="comment"># 最新の Git では switch が推奨</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">switch</span> <span class="str">main</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git merge -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge purple">🤝 こんなとき：作業ブランチの内容をmainに取り込みたいとき</div>
+          <div class="cmd-card-title">ブランチをマージ（合流）する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-merge')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>作業ブランチでの変更を <code>main</code> ブランチに取り込むとき。GitHub では Pull Request を使う方法が一般的です。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-merge"><span class="comment"># まず main ブランチに移動してから</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span>
+
+<span class="comment"># 作業ブランチを main にマージ</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">merge</span> <span class="str">feature/ログイン機能</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git branch -d -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge purple">🗑️ こんなとき：マージ済みの不要なブランチを片付けたいとき</div>
+          <div class="cmd-card-title">ブランチを削除する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-branch-del')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>Pull Request がマージされた後、不要になった作業ブランチを削除してリポジトリを整理します。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-branch-del"><span class="comment"># マージ済みブランチを削除（安全）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-d</span> <span class="str">feature/ログイン機能</span>
+
+<span class="comment"># 未マージでも強制削除（注意して使う）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-D</span> <span class="str">feature/不要なブランチ</span></code>
+        </div>
+        <div class="warn-box">
+          <div class="warn-icon">⚠️</div>
+          <div><code>-D</code>（大文字）は未マージのコミットも含めて強制削除します。作業中の内容が消えるので慎重に！</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== リモート ===== -->
+<section class="section section-alt" id="remote">
+  <div class="container">
+    <div class="cat-header">
+      <div class="cat-icon-wrap" style="background:#FFF3E0">☁️</div>
+      <div>
+        <div class="cat-title">リモート（GitHub）との同期</div>
+        <div class="cat-subtitle">ローカルとGitHubのリポジトリを同期させるコマンド。</div>
+      </div>
+    </div>
+
+    <!-- git push -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">📤 こんなとき：ローカルの変更をGitHubにアップしたいとき</div>
+          <div class="cmd-card-title">変更をプッシュ（アップロード）する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-push')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>コミットした変更を GitHub に反映させたいとき。初回は <code>-u</code> オプションをつけてリモートとの追跡関係を設定します。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-push"><span class="comment"># 初回プッシュ（-u でリモートとの追跡設定も同時に）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span> <span class="flag">-u</span> origin <span class="str">ブランチ名</span>
+
+<span class="comment"># 2回目以降（追跡設定済みなら省略形でOK）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git pull -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">📥 こんなとき：チームの最新変更を取り込みたいとき</div>
+          <div class="cmd-card-title">最新の変更をプル（ダウンロード）する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-pull')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>他のメンバーが GitHub にプッシュした変更を自分のパソコンに取り込むとき。作業前に毎回 pull する習慣をつけると競合が減ります。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-pull"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">pull</span>
+
+<span class="comment"># 特定のリモートとブランチを指定する場合</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">pull</span> origin <span class="str">main</span></code>
+        </div>
+        <div class="point-box">
+          <div class="point-icon">💡</div>
+          <div><strong>毎朝最初にやること：</strong><code>git pull</code> で最新状態にしてから作業を始めると、コンフリクト（競合）が起きにくくなります。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- git fetch -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">🔍 こんなとき：GitHubの状態を確認だけしたいとき</div>
+          <div class="cmd-card-title">リモートの情報を取得する（マージはしない）</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-fetch')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong><code>pull</code> は取得＋マージをまとめて行いますが、<code>fetch</code> は取得だけで自分の作業には影響しません。「まず確認だけしたい」ときに使います。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-fetch"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">fetch</span>
+
+<span class="comment"># 取得後に差分を確認</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span> HEAD origin/main</code>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== 確認・調査 ===== -->
+<section class="section" id="check">
+  <div class="container">
+    <div class="cat-header">
+      <div class="cat-icon-wrap" style="background:#F0FFF4">🔎</div>
+      <div>
+        <div class="cat-title">確認・調査コマンド</div>
+        <div class="cat-subtitle">今の状態・変更内容・履歴を調べる。</div>
+      </div>
+    </div>
+
+    <!-- git status -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">👀 こんなとき：どのファイルが変更されているか確認したいとき</div>
+          <div class="cmd-card-title">現在の状態を確認する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-status')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>何か操作する前に「今どういう状態か」を確認するために使います。迷ったらまずこれを実行！</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-status"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">status</span>
+
+<span class="comment"># 出力の見方：
+# On branch main         ← 今いるブランチ
+# Changes to be committed:   ← add 済み（コミットされる）
+# Changes not staged:    ← 変更あるが add していない
+# Untracked files:       ← Git 管理外の新規ファイル</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git log -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">📜 こんなとき：コミット履歴を見たいとき</div>
+          <div class="cmd-card-title">コミット履歴を表示する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-log')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>過去にどんな変更をしたか振り返りたいとき、または特定のコミットIDを調べたいとき。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-log"><span class="comment"># 詳細表示</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span>
+
+<span class="comment"># 1行で見やすく表示（おすすめ）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline</span>
+
+<span class="comment"># ブランチの分岐もグラフで表示</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline --graph --all</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git diff -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">🔍 こんなとき：何を変更したか詳しく見たいとき</div>
+          <div class="cmd-card-title">変更内容の差分を表示する</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-diff')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>コミット前に「何を変えたか」確認したり、ブランチ間の差分を比較したいとき。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-diff"><span class="comment"># ステージ前の変更を確認</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span>
+
+<span class="comment"># ステージ済み（add後）の変更を確認</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span> <span class="flag">--staged</span>
+
+<span class="comment"># ブランチ間の差分</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span> <span class="str">main</span> <span class="str">feature/ログイン機能</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git stash -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge green">📦 こんなとき：作業途中でブランチを切り替えないといけないとき</div>
+          <div class="cmd-card-title">変更を一時退避する（stash）</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-stash')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>作業中だがコミットするほどでもない状態でブランチを切り替えたいとき。変更を一時保存して、後で取り出せます。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-stash"><span class="comment"># 変更を一時退避</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">stash</span>
+
+<span class="comment"># 退避リストを確認</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">stash</span> <span class="arg">list</span>
+
+<span class="comment"># 退避した変更を取り出す（最新のもの）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">stash</span> <span class="arg">pop</span></code>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== 元に戻す ===== -->
+<section class="section section-alt" id="undo">
+  <div class="container">
+    <div class="cat-header">
+      <div class="cat-icon-wrap" style="background:#FFF5F5">↩️</div>
+      <div>
+        <div class="cat-title">元に戻す・やり直す</div>
+        <div class="cat-subtitle">ミスしても大丈夫。Gitなら過去に戻れます。</div>
+      </div>
+    </div>
+
+    <!-- git restore -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge red">↩️ こんなとき：ファイルの変更をコミット前に取り消したいとき</div>
+          <div class="cmd-card-title">ファイルの変更を取り消す</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-restore')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>編集した内容を「やっぱりやめよう」と思ったとき、最後のコミット時点の状態に戻します。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-restore"><span class="comment"># 特定ファイルの変更を取り消す</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">restore</span> <span class="str">index.html</span>
+
+<span class="comment"># ステージ（add）を取り消す（変更は残る）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">restore</span> <span class="flag">--staged</span> <span class="str">index.html</span></code>
+        </div>
+        <div class="warn-box">
+          <div class="warn-icon">⚠️</div>
+          <div><code>git restore</code> でファイルの変更を取り消すと、<strong>その変更は完全に消えます</strong>。元に戻せないので慎重に！</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- git revert -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge red">🔄 こんなとき：特定のコミットの変更を打ち消したいとき（履歴は残す）</div>
+          <div class="cmd-card-title">コミットを安全に打ち消す（revert）</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-revert')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>すでに push したコミットを「なかったことにしたい」とき。<code>reset</code> と違い、<strong>履歴を消さず</strong>に「打ち消すコミット」を新しく追加します。チームで使うときはこちらが安全。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-revert"><span class="comment"># コミットIDを確認</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline</span>
+<span class="comment"># abc1234 ← 打ち消したいコミットのID</span>
+
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">revert</span> <span class="str">abc1234</span></code>
+        </div>
+      </div>
+    </div>
+
+    <!-- git reset -->
+    <div class="cmd-card">
+      <div class="cmd-card-header">
+        <div>
+          <div class="scenario-badge red">⏪ こんなとき：まだpushしていないコミットを取り消したいとき</div>
+          <div class="cmd-card-title">コミットを取り消す（reset）</div>
+        </div>
+        <button class="copy-btn" onclick="copyCode(this,'code-reset')"><span>📋</span> コピー</button>
+      </div>
+      <div class="cmd-card-body">
+        <div class="cmd-when"><strong>使うシーン：</strong>直前のコミットを「なかったことにしたい」ローカル限定の操作。<code>--soft</code> は変更を残し、<code>--hard</code> は変更ごと消します。</div>
+        <div class="code-block" style="position:relative">
+          <code id="code-reset"><span class="comment"># 直前のコミットを取り消す（変更はステージに残る）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">reset</span> <span class="flag">--soft</span> HEAD~1
+
+<span class="comment"># 直前のコミットを取り消す（変更も消える ← 要注意）</span>
+<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">reset</span> <span class="flag">--hard</span> HEAD~1</code>
+        </div>
+        <div class="warn-box">
+          <div class="warn-icon">⚠️</div>
+          <div><code>--hard</code> は変更内容ごと削除されます。<strong>push 済みのコミットに使うと他のメンバーに影響が出る</strong>ので、ローカルのみに留めましょう。push済みは <code>revert</code> を使って。</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== チートシート ===== -->
+<section class="section" id="cheatsheet">
+  <div class="container">
+    <p class="section-label">Quick Reference</p>
+    <h2 class="section-title">チートシート（一覧表）</h2>
+    <p class="section-desc">よく使うコマンドをまとめて確認。印刷して手元に置いておこう。</p>
+
+    <div style="overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow);">
+      <table class="cheat-table">
+        <thead>
+          <tr>
+            <th>コマンド</th>
+            <th>何をするか</th>
+            <th>こんなとき使う</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>git init</td>
+            <td>リポジトリを初期化</td>
+            <td>新しいプロジェクトを Git で管理し始めるとき</td>
+          </tr>
+          <tr>
+            <td>git clone &lt;URL&gt;</td>
+            <td>リモートをローカルにコピー</td>
+            <td>GitHub のリポジトリを手元にダウンロードするとき</td>
+          </tr>
+          <tr>
+            <td>git status</td>
+            <td>現在の状態を確認</td>
+            <td>迷ったらまずこれ。今どのファイルが変更されているかわかる</td>
+          </tr>
+          <tr>
+            <td>git add &lt;ファイル&gt;</td>
+            <td>ファイルをステージに追加</td>
+            <td>コミットに含めたいファイルを選ぶとき</td>
+          </tr>
+          <tr>
+            <td>git add .</td>
+            <td>変更ファイルをすべてステージ</td>
+            <td>全部まとめてコミットしたいとき</td>
+          </tr>
+          <tr>
+            <td>git commit -m "メッセージ"</td>
+            <td>変更を記録（セーブ）</td>
+            <td>作業の区切りで変更を保存するとき</td>
+          </tr>
+          <tr>
+            <td>git log --oneline</td>
+            <td>コミット履歴を確認</td>
+            <td>過去の変更を振り返るとき、コミットIDを調べるとき</td>
+          </tr>
+          <tr>
+            <td>git diff</td>
+            <td>変更差分を表示</td>
+            <td>コミット前に何を変えたか確認するとき</td>
+          </tr>
+          <tr>
+            <td>git branch</td>
+            <td>ブランチ一覧を表示</td>
+            <td>今どのブランチにいるか確認するとき</td>
+          </tr>
+          <tr>
+            <td>git checkout -b &lt;名前&gt;</td>
+            <td>新ブランチを作成して移動</td>
+            <td>新機能や修正の作業を始めるとき</td>
+          </tr>
+          <tr>
+            <td>git checkout &lt;名前&gt;</td>
+            <td>ブランチを切り替える</td>
+            <td>別の作業ブランチに移動するとき</td>
+          </tr>
+          <tr>
+            <td>git merge &lt;ブランチ名&gt;</td>
+            <td>ブランチを合流させる</td>
+            <td>作業ブランチを main に取り込むとき</td>
+          </tr>
+          <tr>
+            <td>git push</td>
+            <td>ローカルをリモートにアップ</td>
+            <td>コミットを GitHub に反映するとき</td>
+          </tr>
+          <tr>
+            <td>git pull</td>
+            <td>リモートの変更を取り込む</td>
+            <td>チームの最新状態を手元に反映するとき（毎日最初にやろう）</td>
+          </tr>
+          <tr>
+            <td>git stash</td>
+            <td>変更を一時退避</td>
+            <td>作業途中で別ブランチに移らないといけないとき</td>
+          </tr>
+          <tr>
+            <td>git restore &lt;ファイル&gt;</td>
+            <td>ファイルの変更を取り消す</td>
+            <td>編集を全部やり直したいとき（注意: 戻せない）</td>
+          </tr>
+          <tr>
+            <td>git revert &lt;コミットID&gt;</td>
+            <td>コミットを安全に打ち消す</td>
+            <td>push済みのコミットを取り消したいとき（履歴は残る）</td>
+          </tr>
+          <tr>
+            <td>git reset --soft HEAD~1</td>
+            <td>直前のコミットを取り消す（変更は残る）</td>
+            <td>ローカルのコミットをやり直したいとき</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="analogy-box" style="margin-top: 32px">
+      <div class="analogy-icon">🚀</div>
+      <div>
+        <strong>よく使う黄金フロー</strong><br>
+        <code style="font-family:'JetBrains Mono',monospace; font-size:0.9rem; color: var(--color-primary)">
+          git pull → 作業 → git add → git commit -m "..." → git push
+        </code><br>
+        毎日このサイクルを回すだけで Git の基本は習得できます！
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- フッター -->
+<footer class="footer">
+  <p>Gitコマンド集 🌿<br>
+  <a href="../index.html">← Git 入門トップに戻る</a></p>
+</footer>
+
+<script>
+  function copyCode(btn, id) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const text = el.innerText.replace(/^\$ /gm, '');
+    navigator.clipboard.writeText(text).then(() => {
+      btn.classList.add('copied');
+      btn.innerHTML = '<span>✅</span> コピー済！';
+      setTimeout(() => {
+        btn.classList.remove('copied');
+        btn.innerHTML = '<span>📋</span> コピー';
+      }, 2000);
+    });
+  }
+</script>
+</body>
+</html>
