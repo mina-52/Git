@@ -628,6 +628,94 @@ kbd {
 .edit-hint span { font-size: 1.1rem; }
 
 /* ========================================
+   Login Modal
+   ======================================== */
+.login-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+.login-modal {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 40px 36px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+}
+.login-modal-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.login-icon { font-size: 2.4rem; display: block; margin-bottom: 12px; }
+.login-modal-header h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--color-text);
+}
+.login-modal-header p {
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+.login-form { display: flex; flex-direction: column; gap: 16px; }
+.login-field { display: flex; flex-direction: column; gap: 6px; }
+.login-field label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.login-field input {
+  padding: 10px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text);
+  background: var(--color-bg);
+  transition: border-color var(--transition);
+  outline: none;
+}
+.login-field input:focus { border-color: var(--color-primary); }
+.login-error {
+  color: #e03131;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-align: center;
+}
+.login-submit-btn {
+  width: 100%;
+  justify-content: center;
+  background: var(--color-primary);
+  color: white;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: none;
+}
+.login-submit-btn:hover { background: var(--color-primary-light); }
+.login-cancel-btn {
+  width: 100%;
+  background: none;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background var(--transition);
+}
+.login-cancel-btn:hover { background: var(--color-bg); }
+
+/* ========================================
    Responsive
    ======================================== */
 @media (max-width: 640px) {

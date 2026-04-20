@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>みんなの自己紹介 — Git 入門</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .members-page-hero {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+      color: white;
+      padding: 48px 24px;
+      text-align: center;
+    }
+    .members-page-hero h1 { font-size: 2rem; font-weight: 700; margin-bottom: 8px; }
+    .members-page-hero p { opacity: 0.9; font-size: 1rem; }
+  </style>
+</head>
+<body>
+
+<!-- ナビ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <span class="logo-icon">🌿</span>
+      Git 入門
+    </div>
+    <ul class="nav-links">
+      <li><a href="../index.html">← トップへ戻る</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ログインオーバーレイ -->
+<div id="login-overlay" class="login-overlay">
+  <div class="login-modal">
+    <div class="login-modal-header">
+      <span class="login-icon">🔐</span>
+      <h2>ログインが必要です</h2>
+      <p>みんなの自己紹介を見るにはIDとパスワードを入力してください。</p>
+    </div>
+    <form id="login-form" class="login-form" onsubmit="return false;">
+      <div class="login-field">
+        <label for="login-id">ID</label>
+        <input type="text" id="login-id" placeholder="IDを入力" autocomplete="username" />
+      </div>
+      <div class="login-field">
+        <label for="login-pass">パスワード</label>
+        <input type="password" id="login-pass" placeholder="パスワードを入力" autocomplete="current-password" />
+      </div>
+      <p id="login-error" class="login-error" style="display:none;">IDまたはパスワードが違います。</p>
+      <button type="submit" class="btn btn-primary login-submit-btn" id="login-submit">ログイン</button>
+      <a href="../index.html" class="login-cancel-btn" style="display:block;text-align:center;margin-top:4px;padding:10px;">キャンセル</a>
+    </form>
+  </div>
+</div>
+
+<!-- ページ本文（ログイン後に表示） -->
+<div id="page-content" style="display:none;">
+
+  <div class="members-page-hero">
+    <h1>みんなの自己紹介</h1>
+    <p>ページを追加したメンバー一覧です。あなたのページも追加しましょう！</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="members-grid">
+
+        <!-- サンプルメンバー -->
+        <a href="example.html" class="member-card">
+          <div class="member-avatar">🐼</div>
+          <div class="member-name">田中 太郎</div>
+          <div class="member-meta">情報学部 1年</div>
+          <span class="member-tag">サンプル</span>
+        </a>
+
+        <a href="example.html" class="member-card">
+          <div class="member-avatar">🐼</div>
+          <div class="member-name">田中 太郎</div>
+          <div class="member-meta">情報学部 1年</div>
+          <span class="member-tag">サンプル</span>
+        </a>
+
+        <!-- あなたのカードをここに追加！ -->
+        <div class="member-card member-card-add">
+          <div class="add-icon">＋</div>
+          <p>あなたのページを<br>追加しよう！</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  const CORRECT_ID   = 'Git';
+  const CORRECT_PASS = 'YamadaGit2026';
+
+  const overlay   = document.getElementById('login-overlay');
+  const content   = document.getElementById('page-content');
+  const form      = document.getElementById('login-form');
+  const idInput   = document.getElementById('login-id');
+  const passInput = document.getElementById('login-pass');
+  const errorMsg  = document.getElementById('login-error');
+
+  if (sessionStorage.getItem('members-auth') === '1') {
+    overlay.style.display = 'none';
+    content.style.display = 'block';
+  } else {
+    idInput.focus();
+  }
+
+  form.addEventListener('submit', () => {
+    if (idInput.value === CORRECT_ID && passInput.value === CORRECT_PASS) {
+      sessionStorage.setItem('members-auth', '1');
+      overlay.style.display = 'none';
+      content.style.display = 'block';
+    } else {
+      errorMsg.style.display = 'block';
+      passInput.value = '';
+      passInput.focus();
+    }
+  });
+})();
+</script>
+</body>
+</html>
