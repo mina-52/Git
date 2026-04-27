@@ -70,10 +70,12 @@
             <li>インストール後、ターミナルで以下を実行してバージョンが表示されれば成功</li>
           </ol>
           <div class="step-code" style="margin-top:12px">
-            <code><span class="prompt">$ </span><span class="cmd">git</span> --version
-<span class="comment">git version 2.xx.x  ← こんな表示が出れば OK</span></code>
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> --version</code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
+          <p style="font-size:0.85rem; color:var(--color-text-muted); margin-top:6px;">
+            <code>git version 2.xx.x</code> のような表示が出れば OK
+          </p>
         </div>
       </div>
 
@@ -88,14 +90,22 @@
         </div>
         <div class="setup-body">
           <p class="setup-note">ターミナルで以下を <strong>1行ずつ</strong> 実行してください。<br>名前とメールは GitHub のアカウントと合わせるのがおすすめです。</p>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:4px;">名前を登録する</p>
           <div class="step-code">
-            <code><span class="prompt">$ </span><span class="cmd">git</span> config --global user.name <span class="arg">"山田 太郎"</span>
-<span class="prompt">$ </span><span class="cmd">git</span> config --global user.email <span class="arg">"taro@example.com"</span></code>
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> config --global user.name <span class="arg">"山田 太郎"</span></code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
-          <div class="step-code" style="margin-top:10px">
-            <code><span class="comment"># 設定を確認するには：</span>
-<span class="prompt">$ </span><span class="cmd">git</span> config --global --list</code>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-top:10px; margin-bottom:4px;">メールアドレスを登録する</p>
+          <div class="step-code">
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> config --global user.email <span class="arg">"taro@example.com"</span></code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-top:10px; margin-bottom:4px;">設定を確認する</p>
+          <div class="step-code">
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> config --global --list</code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
         </div>
@@ -322,7 +332,7 @@
             <span>📋</span> コピー
           </button>
         </div>
-        <pre class="command-code"><code id="code-init"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">init</span></code></pre>
+        <pre class="command-code"><code id="code-init"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">init</span></code></pre>
       </div>
 
       <!-- git clone -->
@@ -336,68 +346,133 @@
             <span>📋</span> コピー
           </button>
         </div>
-        <pre class="command-code"><code id="code-clone"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git</code></pre>
+        <pre class="command-code"><code id="code-clone"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git</code></pre>
       </div>
 
-      <!-- git add / commit -->
+      <!-- git add - specific file -->
       <div class="command-block">
         <div class="command-header">
           <div>
-            <div class="command-title">変更を記録する（add → commit）</div>
-            <div class="command-desc">ファイルを「ステージ」してからコミット（セーブ）します</div>
+            <div class="command-title">特定のファイルをステージに追加する</div>
+            <div class="command-desc">コミットしたいファイルを指定して追加（推奨）</div>
           </div>
-          <button class="copy-btn" data-target="code-add-commit">
+          <button class="copy-btn" data-target="code-add-file">
             <span>📋</span> コピー
           </button>
         </div>
-        <pre class="command-code"><code id="code-add-commit"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> ファイル名          <span class="comment"># 特定のファイルをステージ</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> .               <span class="comment"># 変更したファイルをすべてステージ</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> -m <span class="arg">"メッセージ"</span>  <span class="comment"># コミット（何を変えたか書く）</span></code></pre>
+        <pre class="command-code"><code id="code-add-file"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">add</span> ファイル名</code></pre>
       </div>
 
-      <!-- git branch / checkout -->
+      <!-- git add . -->
       <div class="command-block">
         <div class="command-header">
           <div>
-            <div class="command-title">ブランチを作って切り替える</div>
-            <div class="command-desc">新しいブランチを作り、そこに移動します</div>
+            <div class="command-title">変更したファイルをすべてステージに追加する</div>
+            <div class="command-desc">変更・追加したファイルをまとめてステージします</div>
           </div>
-          <button class="copy-btn" data-target="code-branch">
+          <button class="copy-btn" data-target="code-add-all">
             <span>📋</span> コピー
           </button>
         </div>
-        <pre class="command-code"><code id="code-branch"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span>                  <span class="comment"># ブランチ一覧を見る</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="arg">ブランチ名</span>   <span class="comment"># 新ブランチを作って移動</span></code></pre>
+        <pre class="command-code"><code id="code-add-all"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">add</span> .</code></pre>
       </div>
 
-      <!-- git push / pull -->
+      <!-- git commit -->
       <div class="command-block">
         <div class="command-header">
           <div>
-            <div class="command-title">アップロード / ダウンロード</div>
-            <div class="command-desc">ローカルとリモートの変更を同期します</div>
+            <div class="command-title">変更を記録する（コミット）</div>
+            <div class="command-desc">何を変えたかメッセージと一緒に保存します</div>
           </div>
-          <button class="copy-btn" data-target="code-sync">
+          <button class="copy-btn" data-target="code-commit">
             <span>📋</span> コピー
           </button>
         </div>
-        <pre class="command-code"><code id="code-sync"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span> origin <span class="arg">ブランチ名</span>   <span class="comment"># リモートにアップロード</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">pull</span>                    <span class="comment"># リモートの最新版を取得</span></code></pre>
+        <pre class="command-code"><code id="code-commit"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">commit</span> -m <span class="arg">"メッセージ"</span></code></pre>
       </div>
 
-      <!-- git status / log -->
+      <!-- git branch -->
       <div class="command-block">
         <div class="command-header">
           <div>
-            <div class="command-title">状態・履歴を確認する</div>
-            <div class="command-desc">今の状態や過去のコミット履歴を見られます</div>
+            <div class="command-title">ブランチ一覧を見る</div>
+            <div class="command-desc">今いるブランチと存在するブランチを確認します</div>
+          </div>
+          <button class="copy-btn" data-target="code-branch-list">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-branch-list"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">branch</span></code></pre>
+      </div>
+
+      <!-- git checkout -b -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">新しいブランチを作って切り替える</div>
+            <div class="command-desc">新ブランチを作成して、そのブランチに移動します</div>
+          </div>
+          <button class="copy-btn" data-target="code-branch-new">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-branch-new"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="arg">ブランチ名</span></code></pre>
+      </div>
+
+      <!-- git push -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">変更を GitHub にアップロードする（push）</div>
+            <div class="command-desc">ローカルのコミットをリモートに送信します</div>
+          </div>
+          <button class="copy-btn" data-target="code-push">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-push"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">push</span> origin <span class="arg">ブランチ名</span></code></pre>
+      </div>
+
+      <!-- git pull -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">最新の変更を取り込む（pull）</div>
+            <div class="command-desc">リモートの最新版をローカルに取得します</div>
+          </div>
+          <button class="copy-btn" data-target="code-pull">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-pull"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">pull</span></code></pre>
+      </div>
+
+      <!-- git status -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">変更されたファイルを確認する</div>
+            <div class="command-desc">今どのファイルが変更・ステージされているか一覧表示</div>
           </div>
           <button class="copy-btn" data-target="code-status">
             <span>📋</span> コピー
           </button>
         </div>
-        <pre class="command-code"><code id="code-status"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">status</span>         <span class="comment"># 変更されたファイルを確認</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> --oneline   <span class="comment"># コミット履歴をコンパクトに表示</span></code></pre>
+        <pre class="command-code"><code id="code-status"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">status</span></code></pre>
+      </div>
+
+      <!-- git log -->
+      <div class="command-block">
+        <div class="command-header">
+          <div>
+            <div class="command-title">コミット履歴をコンパクトに表示する</div>
+            <div class="command-desc">過去のコミットを1行ずつ見やすく一覧表示</div>
+          </div>
+          <button class="copy-btn" data-target="code-log">
+            <span>📋</span> コピー
+          </button>
+        </div>
+        <pre class="command-code"><code id="code-log"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">log</span> --oneline</code></pre>
       </div>
 
     </div>
@@ -418,9 +493,16 @@
         <div class="step-body">
           <h3>リポジトリをクローンする</h3>
           <p>GitHub からプロジェクトを自分のパソコンにコピーします。</p>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:4px;">リポジトリをダウンロードする</p>
           <div class="step-code">
-            <code><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git
-<span class="prompt">$ </span><span class="cmd">cd</span> リポジトリ名</code>
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git</code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-top:10px; margin-bottom:4px;">ダウンロードしたフォルダに移動する</p>
+          <div class="step-code">
+            <code><span class="prompt">&gt; </span><span class="cmd">cd</span> リポジトリ名</code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
         </div>
@@ -432,7 +514,7 @@
           <h3>ブランチを作る</h3>
           <p>自分専用のブランチを作って作業します。ブランチ名は自分の名前にしましょう。</p>
           <div class="step-code">
-            <code><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="arg">yourname</span></code>
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">checkout</span> -b <span class="arg">yourname</span></code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
         </div>
@@ -443,12 +525,16 @@
         <div class="step-body">
           <h3>自己紹介ページを作る</h3>
           <p><code>pages/template.html</code> をコピーして自分のファイルを作り、内容を書き換えましょう。ファイル名は <code>pages/yourname.html</code> にします。</p>
-          <div class="step-code">
-            <code><span class="comment"># Windows (コマンドプロンプト)</span>
-copy pages\template.html pages\yourname.html
 
-<span class="comment"># Mac / Linux</span>
-cp pages/template.html pages/yourname.html</code>
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:4px;">Windows（コマンドプロンプト）</p>
+          <div class="step-code">
+            <code>copy pages\template.html pages\yourname.html</code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-top:10px; margin-bottom:4px;">Mac / Linux</p>
+          <div class="step-code">
+            <code>cp pages/template.html pages/yourname.html</code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
         </div>
@@ -459,10 +545,22 @@ cp pages/template.html pages/yourname.html</code>
         <div class="step-body">
           <h3>コミットしてプッシュする</h3>
           <p>変更を保存（コミット）して GitHub にアップロードします。</p>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-bottom:4px;">手順1：ファイルをステージに追加する</p>
           <div class="step-code">
-            <code><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> pages/yourname.html
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> -m <span class="arg">"自己紹介ページを追加"</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span> origin <span class="arg">yourname</span></code>
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">add</span> pages/yourname.html</code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-top:10px; margin-bottom:4px;">手順2：変更をコミット（記録）する</p>
+          <div class="step-code">
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">commit</span> -m <span class="arg">"自己紹介ページを追加"</span></code>
+            <button class="step-copy-btn" title="コピー">📋</button>
+          </div>
+
+          <p style="font-size:0.82rem; color:var(--color-text-muted); margin-top:10px; margin-bottom:4px;">手順3：GitHub にアップロードする</p>
+          <div class="step-code">
+            <code><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">push</span> origin <span class="arg">yourname</span></code>
             <button class="step-copy-btn" title="コピー">📋</button>
           </div>
         </div>
