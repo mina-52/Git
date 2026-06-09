@@ -151,10 +151,6 @@
       padding: 16px 20px 14px;
       background: var(--color-bg);
       border-bottom: 1px solid var(--color-border);
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 12px;
     }
     .cmd-card-title { font-weight: 700; font-size: 1rem; margin-bottom: 4px; }
     .cmd-card-body { padding: 20px 22px; }
@@ -166,7 +162,7 @@
     }
     .cmd-when strong { color: var(--color-text); }
 
-    /* コードブロック（インライン） */
+    /* コードブロック */
     .code-block {
       background: var(--color-code-bg);
       color: var(--color-code-text);
@@ -174,6 +170,7 @@
       font-size: 0.9rem;
       border-radius: var(--radius-sm);
       padding: 16px 18px;
+      padding-right: 80px;
       overflow-x: auto;
       line-height: 1.9;
       position: relative;
@@ -196,9 +193,20 @@
       font-size: 0.75rem;
       cursor: pointer;
       transition: background 0.15s;
+      white-space: nowrap;
     }
     .copy-code-btn:hover { background: rgba(255,255,255,0.2); }
     .copy-code-btn.copied { background: #40C057; color: white; border-color: #40C057; }
+
+    /* バリアントラベル（コマンドの説明ラベル） */
+    .cmd-variant-label {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      margin: 12px 0 4px;
+      font-weight: 500;
+      padding-left: 2px;
+    }
+    .cmd-variant-label:first-child { margin-top: 0; }
 
     /* 注意ボックス */
     .warn-box {
@@ -410,17 +418,18 @@
     <!-- git init -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">🆕 こんなとき：新しいプロジェクトを始めるとき</div>
-          <div class="cmd-card-title">リポジトリを新規作成する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-init')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">🆕 こんなとき：新しいプロジェクトを始めるとき</div>
+        <div class="cmd-card-title">リポジトリを新規作成する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>まだ Git 管理されていないフォルダを、初めて Git リポジトリとして設定したいとき。このコマンドを実行すると <code>.git</code> フォルダが作られます。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-init"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">init</span>
-<span class="comment"># → フォルダが Git リポジトリになる（.git フォルダが作られる）</span></code>
+        <div class="code-block">
+          <code id="code-init"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">init</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-init')">📋 コピー</button>
+        </div>
+        <div class="point-box" style="margin-top:10px">
+          <div class="point-icon">💡</div>
+          <div>実行するとフォルダが Git リポジトリになります（<code>.git</code> フォルダが作られます）</div>
         </div>
       </div>
     </div>
@@ -428,19 +437,22 @@
     <!-- git clone -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge blue">📥 こんなとき：GitHubのリポジトリを手元にコピーしたいとき</div>
-          <div class="cmd-card-title">リポジトリをクローンする</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-clone')"><span>📋</span> コピー</button>
+        <div class="scenario-badge blue">📥 こんなとき：GitHubのリポジトリを手元にコピーしたいとき</div>
+        <div class="cmd-card-title">リポジトリをクローンする</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>チームのリポジトリや、他人の GitHub プロジェクトを自分のパソコンにダウンロードするとき。URL は GitHub のリポジトリページの「Code」ボタンからコピーできます。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-clone"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git
 
-<span class="comment"># フォルダ名を指定してクローンしたい場合</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git <span class="str">my-folder</span></code>
+        <div class="cmd-variant-label">基本（フォルダ名はリポジトリ名になる）</div>
+        <div class="code-block">
+          <code id="code-clone-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git</code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-clone-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">フォルダ名を指定してクローンしたい場合</div>
+        <div class="code-block">
+          <code id="code-clone-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">clone</span> https://github.com/ユーザー名/リポジトリ名.git <span class="str">my-folder</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-clone-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -448,23 +460,28 @@
     <!-- git add -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">✅ こんなとき：変更したファイルをコミット対象に入れたいとき</div>
-          <div class="cmd-card-title">ファイルをステージに追加する（add）</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-add')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">✅ こんなとき：変更したファイルをコミット対象に入れたいとき</div>
+        <div class="cmd-card-title">ファイルをステージに追加する（add）</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>編集したファイルを「次のコミットに含める」と印を付ける操作です。複数ファイルを変更しても、<code>add</code> したものだけがコミットされます。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-add"><span class="comment"># 特定のファイルだけ追加（おすすめ）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> <span class="str">index.html</span>
 
-<span class="comment"># 変更したファイルをすべて追加</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> <span class="flag">.</span>
+        <div class="cmd-variant-label">特定のファイルだけ追加（おすすめ）</div>
+        <div class="code-block">
+          <code id="code-add-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">add</span> <span class="str">index.html</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-add-1')">📋 コピー</button>
+        </div>
 
-<span class="comment"># 特定フォルダ内のファイルをすべて追加</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">add</span> <span class="str">pages/</span></code>
+        <div class="cmd-variant-label">変更したファイルをすべて追加</div>
+        <div class="code-block">
+          <code id="code-add-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">add</span> <span class="flag">.</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-add-2')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">特定フォルダ内のファイルをすべて追加</div>
+        <div class="code-block">
+          <code id="code-add-3"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">add</span> <span class="str">pages/</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-add-3')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -472,20 +489,24 @@
     <!-- git commit -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">💾 こんなとき：作業の区切りで変更を記録したいとき</div>
-          <div class="cmd-card-title">変更をコミット（記録）する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-commit')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">💾 こんなとき：作業の区切りで変更を記録したいとき</div>
+        <div class="cmd-card-title">変更をコミット（記録）する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>ステージに上げたファイルを正式に記録します。メッセージには「何をしたか」を日本語でOKなので簡潔に書きましょう。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-commit"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> <span class="flag">-m</span> <span class="str">"ナビゲーションのリンクを修正"</span>
 
-<span class="comment"># add と commit を同時にやる（追跡済みファイルのみ）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">commit</span> <span class="flag">-am</span> <span class="str">"スタイルを調整"</span></code>
+        <div class="cmd-variant-label">基本（add したファイルをコミット）</div>
+        <div class="code-block">
+          <code id="code-commit-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">commit</span> <span class="flag">-m</span> <span class="str">"ナビゲーションのリンクを修正"</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-commit-1')">📋 コピー</button>
         </div>
+
+        <div class="cmd-variant-label">add と commit を同時にやる（追跡済みファイルのみ）</div>
+        <div class="code-block">
+          <code id="code-commit-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">commit</span> <span class="flag">-am</span> <span class="str">"スタイルを調整"</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-commit-2')">📋 コピー</button>
+        </div>
+
         <div class="point-box">
           <div class="point-icon">💡</div>
           <div>コミットメッセージのコツ：<strong>「何を」「なぜ」</strong>を書くと後から見返したときに分かりやすい。例: 「ヘッダー画像を追加」「ログインエラーを修正」</div>
@@ -511,20 +532,22 @@
     <!-- git branch -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge purple">🌿 こんなとき：今どのブランチにいるか確認したいとき</div>
-          <div class="cmd-card-title">ブランチ一覧を見る</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-branch-list')"><span>📋</span> コピー</button>
+        <div class="scenario-badge purple">🌿 こんなとき：今どのブランチにいるか確認したいとき</div>
+        <div class="cmd-card-title">ブランチ一覧を見る</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>今いるブランチを確認したり、存在するブランチをリストアップしたいとき。<code>*</code> が付いているのが現在のブランチです。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-branch-list"><span class="comment"># ローカルのブランチ一覧</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span>
 
-<span class="comment"># リモートも含めた全ブランチ一覧</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-a</span></code>
+        <div class="cmd-variant-label">ローカルのブランチ一覧</div>
+        <div class="code-block">
+          <code id="code-branch-list-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">branch</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-branch-list-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">リモートも含めた全ブランチ一覧</div>
+        <div class="code-block">
+          <code id="code-branch-list-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-a</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-branch-list-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -532,20 +555,22 @@
     <!-- git checkout -b -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge purple">✨ こんなとき：新しい機能や修正の作業を始めるとき</div>
-          <div class="cmd-card-title">新しいブランチを作って移動する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-branch-new')"><span>📋</span> コピー</button>
+        <div class="scenario-badge purple">✨ こんなとき：新しい機能や修正の作業を始めるとき</div>
+        <div class="cmd-card-title">新しいブランチを作って移動する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>新機能の追加やバグ修正をするとき、<code>main</code> ブランチを直接変えないように専用のブランチを作って作業します。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-branch-new"><span class="comment"># 新しいブランチを作成して、そのブランチに移動</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="flag">-b</span> <span class="str">feature/ログイン機能</span>
 
-<span class="comment"># 最新の Git では switch コマンドが推奨</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">switch</span> <span class="flag">-c</span> <span class="str">feature/ログイン機能</span></code>
+        <div class="cmd-variant-label">新しいブランチを作成して、そのブランチに移動（従来のコマンド）</div>
+        <div class="code-block">
+          <code id="code-branch-new-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="flag">-b</span> <span class="str">feature/ログイン機能</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-branch-new-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">最新の Git では switch コマンドが推奨</div>
+        <div class="code-block">
+          <code id="code-branch-new-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">switch</span> <span class="flag">-c</span> <span class="str">feature/ログイン機能</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-branch-new-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -553,20 +578,28 @@
     <!-- git checkout / switch -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge purple">🔀 こんなとき：別のブランチに切り替えたいとき</div>
-          <div class="cmd-card-title">既存のブランチに移動する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-checkout')"><span>📋</span> コピー</button>
+        <div class="scenario-badge purple">🔀 こんなとき：別のブランチに切り替えたいとき</div>
+        <div class="cmd-card-title">既存のブランチに移動する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>作業中のブランチから別のブランチへ移りたいとき。移動する前にコミットかスタッシュをしておきましょう。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-checkout"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span>        <span class="comment"># main ブランチに移動</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">feature/ログイン機能</span>  <span class="comment"># 別のブランチに移動</span>
 
-<span class="comment"># 最新の Git では switch が推奨</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">switch</span> <span class="str">main</span></code>
+        <div class="cmd-variant-label">main ブランチに移動</div>
+        <div class="code-block">
+          <code id="code-checkout-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-checkout-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">別のブランチに移動</div>
+        <div class="code-block">
+          <code id="code-checkout-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">feature/ログイン機能</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-checkout-2')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">最新の Git では switch コマンドが推奨</div>
+        <div class="code-block">
+          <code id="code-checkout-3"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">switch</span> <span class="str">main</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-checkout-3')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -574,20 +607,22 @@
     <!-- git merge -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge purple">🤝 こんなとき：作業ブランチの内容をmainに取り込みたいとき</div>
-          <div class="cmd-card-title">ブランチをマージ（合流）する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-merge')"><span>📋</span> コピー</button>
+        <div class="scenario-badge purple">🤝 こんなとき：作業ブランチの内容をmainに取り込みたいとき</div>
+        <div class="cmd-card-title">ブランチをマージ（合流）する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>作業ブランチでの変更を <code>main</code> ブランチに取り込むとき。GitHub では Pull Request を使う方法が一般的です。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-merge"><span class="comment"># まず main ブランチに移動してから</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span>
 
-<span class="comment"># 作業ブランチを main にマージ</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">merge</span> <span class="str">feature/ログイン機能</span></code>
+        <div class="cmd-variant-label">手順1：まず main ブランチに移動する</div>
+        <div class="code-block">
+          <code id="code-merge-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">checkout</span> <span class="str">main</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-merge-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">手順2：作業ブランチを main にマージする</div>
+        <div class="code-block">
+          <code id="code-merge-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">merge</span> <span class="str">feature/ログイン機能</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-merge-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -595,21 +630,24 @@
     <!-- git branch -d -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge purple">🗑️ こんなとき：マージ済みの不要なブランチを片付けたいとき</div>
-          <div class="cmd-card-title">ブランチを削除する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-branch-del')"><span>📋</span> コピー</button>
+        <div class="scenario-badge purple">🗑️ こんなとき：マージ済みの不要なブランチを片付けたいとき</div>
+        <div class="cmd-card-title">ブランチを削除する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>Pull Request がマージされた後、不要になった作業ブランチを削除してリポジトリを整理します。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-branch-del"><span class="comment"># マージ済みブランチを削除（安全）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-d</span> <span class="str">feature/ログイン機能</span>
 
-<span class="comment"># 未マージでも強制削除（注意して使う）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-D</span> <span class="str">feature/不要なブランチ</span></code>
+        <div class="cmd-variant-label">マージ済みブランチを削除（安全）</div>
+        <div class="code-block">
+          <code id="code-branch-del-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-d</span> <span class="str">feature/ログイン機能</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-branch-del-1')">📋 コピー</button>
         </div>
+
+        <div class="cmd-variant-label">未マージでも強制削除（注意して使う）</div>
+        <div class="code-block">
+          <code id="code-branch-del-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">branch</span> <span class="flag">-D</span> <span class="str">feature/不要なブランチ</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-branch-del-2')">📋 コピー</button>
+        </div>
+
         <div class="warn-box">
           <div class="warn-icon">⚠️</div>
           <div><code>-D</code>（大文字）は未マージのコミットも含めて強制削除します。作業中の内容が消えるので慎重に！</div>
@@ -635,20 +673,22 @@
     <!-- git push -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">📤 こんなとき：ローカルの変更をGitHubにアップしたいとき</div>
-          <div class="cmd-card-title">変更をプッシュ（アップロード）する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-push')"><span>📋</span> コピー</button>
+        <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">📤 こんなとき：ローカルの変更をGitHubにアップしたいとき</div>
+        <div class="cmd-card-title">変更をプッシュ（アップロード）する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>コミットした変更を GitHub に反映させたいとき。初回は <code>-u</code> オプションをつけてリモートとの追跡関係を設定します。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-push"><span class="comment"># 初回プッシュ（-u でリモートとの追跡設定も同時に）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span> <span class="flag">-u</span> origin <span class="str">ブランチ名</span>
 
-<span class="comment"># 2回目以降（追跡設定済みなら省略形でOK）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">push</span></code>
+        <div class="cmd-variant-label">初回プッシュ（-u でリモートとの追跡設定も同時に）</div>
+        <div class="code-block">
+          <code id="code-push-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">push</span> <span class="flag">-u</span> origin <span class="str">ブランチ名</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-push-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">2回目以降（追跡設定済みなら省略形でOK）</div>
+        <div class="code-block">
+          <code id="code-push-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">push</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-push-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -656,20 +696,24 @@
     <!-- git pull -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">📥 こんなとき：チームの最新変更を取り込みたいとき</div>
-          <div class="cmd-card-title">最新の変更をプル（ダウンロード）する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-pull')"><span>📋</span> コピー</button>
+        <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">📥 こんなとき：チームの最新変更を取り込みたいとき</div>
+        <div class="cmd-card-title">最新の変更をプル（ダウンロード）する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>他のメンバーが GitHub にプッシュした変更を自分のパソコンに取り込むとき。作業前に毎回 pull する習慣をつけると競合が減ります。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-pull"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">pull</span>
 
-<span class="comment"># 特定のリモートとブランチを指定する場合</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">pull</span> origin <span class="str">main</span></code>
+        <div class="cmd-variant-label">基本（現在のブランチを最新に更新）</div>
+        <div class="code-block">
+          <code id="code-pull-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">pull</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-pull-1')">📋 コピー</button>
         </div>
+
+        <div class="cmd-variant-label">特定のリモートとブランチを指定する場合</div>
+        <div class="code-block">
+          <code id="code-pull-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">pull</span> origin <span class="str">main</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-pull-2')">📋 コピー</button>
+        </div>
+
         <div class="point-box">
           <div class="point-icon">💡</div>
           <div><strong>毎朝最初にやること：</strong><code>git pull</code> で最新状態にしてから作業を始めると、コンフリクト（競合）が起きにくくなります。</div>
@@ -680,19 +724,22 @@
     <!-- git fetch -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">🔍 こんなとき：GitHubの状態を確認だけしたいとき</div>
-          <div class="cmd-card-title">リモートの情報を取得する（マージはしない）</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-fetch')"><span>📋</span> コピー</button>
+        <div class="scenario-badge" style="background:#FFF3E0;border-color:#FFB74D;color:#E65100">🔍 こんなとき：GitHubの状態を確認だけしたいとき</div>
+        <div class="cmd-card-title">リモートの情報を取得する（マージはしない）</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong><code>pull</code> は取得＋マージをまとめて行いますが、<code>fetch</code> は取得だけで自分の作業には影響しません。「まず確認だけしたい」ときに使います。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-fetch"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">fetch</span>
 
-<span class="comment"># 取得後に差分を確認</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span> HEAD origin/main</code>
+        <div class="cmd-variant-label">手順1：リモートの情報を取得する（作業には影響なし）</div>
+        <div class="code-block">
+          <code id="code-fetch-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">fetch</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-fetch-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">手順2：取得後に自分の変更との差分を確認する</div>
+        <div class="code-block">
+          <code id="code-fetch-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">diff</span> HEAD origin/main</code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-fetch-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -715,22 +762,24 @@
     <!-- git status -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">👀 こんなとき：どのファイルが変更されているか確認したいとき</div>
-          <div class="cmd-card-title">現在の状態を確認する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-status')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">👀 こんなとき：どのファイルが変更されているか確認したいとき</div>
+        <div class="cmd-card-title">現在の状態を確認する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>何か操作する前に「今どういう状態か」を確認するために使います。迷ったらまずこれを実行！</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-status"><span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">status</span>
-
-<span class="comment"># 出力の見方：
-# On branch main         ← 今いるブランチ
-# Changes to be committed:   ← add 済み（コミットされる）
-# Changes not staged:    ← 変更あるが add していない
-# Untracked files:       ← Git 管理外の新規ファイル</span></code>
+        <div class="code-block">
+          <code id="code-status"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">status</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-status')">📋 コピー</button>
+        </div>
+        <div class="point-box" style="margin-top:10px">
+          <div class="point-icon">📖</div>
+          <div>
+            <strong>出力の見方：</strong><br>
+            <code>On branch main</code> ← 今いるブランチ<br>
+            <code>Changes to be committed:</code> ← add 済み（コミットされる）<br>
+            <code>Changes not staged:</code> ← 変更あるが add していない<br>
+            <code>Untracked files:</code> ← Git 管理外の新規ファイル
+          </div>
         </div>
       </div>
     </div>
@@ -738,23 +787,28 @@
     <!-- git log -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">📜 こんなとき：コミット履歴を見たいとき</div>
-          <div class="cmd-card-title">コミット履歴を表示する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-log')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">📜 こんなとき：コミット履歴を見たいとき</div>
+        <div class="cmd-card-title">コミット履歴を表示する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>過去にどんな変更をしたか振り返りたいとき、または特定のコミットIDを調べたいとき。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-log"><span class="comment"># 詳細表示</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span>
 
-<span class="comment"># 1行で見やすく表示（おすすめ）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline</span>
+        <div class="cmd-variant-label">詳細表示</div>
+        <div class="code-block">
+          <code id="code-log-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">log</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-log-1')">📋 コピー</button>
+        </div>
 
-<span class="comment"># ブランチの分岐もグラフで表示</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline --graph --all</span></code>
+        <div class="cmd-variant-label">1行で見やすく表示（おすすめ）</div>
+        <div class="code-block">
+          <code id="code-log-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-log-2')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">ブランチの分岐もグラフで表示</div>
+        <div class="code-block">
+          <code id="code-log-3"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline --graph --all</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-log-3')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -762,23 +816,28 @@
     <!-- git diff -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">🔍 こんなとき：何を変更したか詳しく見たいとき</div>
-          <div class="cmd-card-title">変更内容の差分を表示する</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-diff')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">🔍 こんなとき：何を変更したか詳しく見たいとき</div>
+        <div class="cmd-card-title">変更内容の差分を表示する</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>コミット前に「何を変えたか」確認したり、ブランチ間の差分を比較したいとき。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-diff"><span class="comment"># ステージ前の変更を確認</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span>
 
-<span class="comment"># ステージ済み（add後）の変更を確認</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span> <span class="flag">--staged</span>
+        <div class="cmd-variant-label">ステージ前（add していない）の変更を確認</div>
+        <div class="code-block">
+          <code id="code-diff-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">diff</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-diff-1')">📋 コピー</button>
+        </div>
 
-<span class="comment"># ブランチ間の差分</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">diff</span> <span class="str">main</span> <span class="str">feature/ログイン機能</span></code>
+        <div class="cmd-variant-label">ステージ済み（add 後）の変更を確認</div>
+        <div class="code-block">
+          <code id="code-diff-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">diff</span> <span class="flag">--staged</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-diff-2')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">ブランチ間の差分を確認</div>
+        <div class="code-block">
+          <code id="code-diff-3"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">diff</span> <span class="str">main</span> <span class="str">feature/ログイン機能</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-diff-3')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -786,23 +845,28 @@
     <!-- git stash -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge green">📦 こんなとき：作業途中でブランチを切り替えないといけないとき</div>
-          <div class="cmd-card-title">変更を一時退避する（stash）</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-stash')"><span>📋</span> コピー</button>
+        <div class="scenario-badge green">📦 こんなとき：作業途中でブランチを切り替えないといけないとき</div>
+        <div class="cmd-card-title">変更を一時退避する（stash）</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>作業中だがコミットするほどでもない状態でブランチを切り替えたいとき。変更を一時保存して、後で取り出せます。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-stash"><span class="comment"># 変更を一時退避</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">stash</span>
 
-<span class="comment"># 退避リストを確認</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">stash</span> <span class="arg">list</span>
+        <div class="cmd-variant-label">変更を一時退避する</div>
+        <div class="code-block">
+          <code id="code-stash-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">stash</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-stash-1')">📋 コピー</button>
+        </div>
 
-<span class="comment"># 退避した変更を取り出す（最新のもの）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">stash</span> <span class="arg">pop</span></code>
+        <div class="cmd-variant-label">退避リストを確認する</div>
+        <div class="code-block">
+          <code id="code-stash-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">stash</span> <span class="arg">list</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-stash-2')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">退避した変更を取り出す（最新のもの）</div>
+        <div class="code-block">
+          <code id="code-stash-3"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">stash</span> <span class="arg">pop</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-stash-3')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -825,21 +889,24 @@
     <!-- git restore -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge red">↩️ こんなとき：ファイルの変更をコミット前に取り消したいとき</div>
-          <div class="cmd-card-title">ファイルの変更を取り消す</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-restore')"><span>📋</span> コピー</button>
+        <div class="scenario-badge red">↩️ こんなとき：ファイルの変更をコミット前に取り消したいとき</div>
+        <div class="cmd-card-title">ファイルの変更を取り消す</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>編集した内容を「やっぱりやめよう」と思ったとき、最後のコミット時点の状態に戻します。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-restore"><span class="comment"># 特定ファイルの変更を取り消す</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">restore</span> <span class="str">index.html</span>
 
-<span class="comment"># ステージ（add）を取り消す（変更は残る）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">restore</span> <span class="flag">--staged</span> <span class="str">index.html</span></code>
+        <div class="cmd-variant-label">特定ファイルの変更を取り消す</div>
+        <div class="code-block">
+          <code id="code-restore-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">restore</span> <span class="str">index.html</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-restore-1')">📋 コピー</button>
         </div>
+
+        <div class="cmd-variant-label">ステージ（add）を取り消す（変更は残る）</div>
+        <div class="code-block">
+          <code id="code-restore-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">restore</span> <span class="flag">--staged</span> <span class="str">index.html</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-restore-2')">📋 コピー</button>
+        </div>
+
         <div class="warn-box">
           <div class="warn-icon">⚠️</div>
           <div><code>git restore</code> でファイルの変更を取り消すと、<strong>その変更は完全に消えます</strong>。元に戻せないので慎重に！</div>
@@ -850,20 +917,22 @@
     <!-- git revert -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge red">🔄 こんなとき：特定のコミットの変更を打ち消したいとき（履歴は残す）</div>
-          <div class="cmd-card-title">コミットを安全に打ち消す（revert）</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-revert')"><span>📋</span> コピー</button>
+        <div class="scenario-badge red">🔄 こんなとき：特定のコミットの変更を打ち消したいとき（履歴は残す）</div>
+        <div class="cmd-card-title">コミットを安全に打ち消す（revert）</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>すでに push したコミットを「なかったことにしたい」とき。<code>reset</code> と違い、<strong>履歴を消さず</strong>に「打ち消すコミット」を新しく追加します。チームで使うときはこちらが安全。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-revert"><span class="comment"># コミットIDを確認</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline</span>
-<span class="comment"># abc1234 ← 打ち消したいコミットのID</span>
 
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">revert</span> <span class="str">abc1234</span></code>
+        <div class="cmd-variant-label">手順1：コミットIDを確認する</div>
+        <div class="code-block">
+          <code id="code-revert-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">log</span> <span class="flag">--oneline</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-revert-1')">📋 コピー</button>
+        </div>
+
+        <div class="cmd-variant-label">手順2：確認したコミットIDを指定して打ち消す</div>
+        <div class="code-block">
+          <code id="code-revert-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">revert</span> <span class="str">abc1234</span></code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-revert-2')">📋 コピー</button>
         </div>
       </div>
     </div>
@@ -871,21 +940,24 @@
     <!-- git reset -->
     <div class="cmd-card">
       <div class="cmd-card-header">
-        <div>
-          <div class="scenario-badge red">⏪ こんなとき：まだpushしていないコミットを取り消したいとき</div>
-          <div class="cmd-card-title">コミットを取り消す（reset）</div>
-        </div>
-        <button class="copy-btn" onclick="copyCode(this,'code-reset')"><span>📋</span> コピー</button>
+        <div class="scenario-badge red">⏪ こんなとき：まだpushしていないコミットを取り消したいとき</div>
+        <div class="cmd-card-title">コミットを取り消す（reset）</div>
       </div>
       <div class="cmd-card-body">
         <div class="cmd-when"><strong>使うシーン：</strong>直前のコミットを「なかったことにしたい」ローカル限定の操作。<code>--soft</code> は変更を残し、<code>--hard</code> は変更ごと消します。</div>
-        <div class="code-block" style="position:relative">
-          <code id="code-reset"><span class="comment"># 直前のコミットを取り消す（変更はステージに残る）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">reset</span> <span class="flag">--soft</span> HEAD~1
 
-<span class="comment"># 直前のコミットを取り消す（変更も消える ← 要注意）</span>
-<span class="prompt">$ </span><span class="cmd">git</span> <span class="arg">reset</span> <span class="flag">--hard</span> HEAD~1</code>
+        <div class="cmd-variant-label">直前のコミットを取り消す（変更はステージに残る）</div>
+        <div class="code-block">
+          <code id="code-reset-1"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">reset</span> <span class="flag">--soft</span> HEAD~1</code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-reset-1')">📋 コピー</button>
         </div>
+
+        <div class="cmd-variant-label">直前のコミットを取り消す（変更も消える ← 要注意）</div>
+        <div class="code-block">
+          <code id="code-reset-2"><span class="prompt">&gt; </span><span class="cmd">git</span> <span class="arg">reset</span> <span class="flag">--hard</span> HEAD~1</code>
+          <button class="copy-code-btn" onclick="copyCode(this,'code-reset-2')">📋 コピー</button>
+        </div>
+
         <div class="warn-box">
           <div class="warn-icon">⚠️</div>
           <div><code>--hard</code> は変更内容ごと削除されます。<strong>push 済みのコミットに使うと他のメンバーに影響が出る</strong>ので、ローカルのみに留めましょう。push済みは <code>revert</code> を使って。</div>
@@ -1033,13 +1105,13 @@
   function copyCode(btn, id) {
     const el = document.getElementById(id);
     if (!el) return;
-    const text = el.innerText.replace(/^\$ /gm, '');
+    const text = el.innerText.replace(/^> /gm, '');
     navigator.clipboard.writeText(text).then(() => {
       btn.classList.add('copied');
-      btn.innerHTML = '<span>✅</span> コピー済！';
+      btn.innerHTML = '✅ コピー済！';
       setTimeout(() => {
         btn.classList.remove('copied');
-        btn.innerHTML = '<span>📋</span> コピー';
+        btn.innerHTML = '📋 コピー';
       }, 2000);
     });
   }
